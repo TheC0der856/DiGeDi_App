@@ -1,0 +1,3 @@
+# DiGeDi_App
+Distinct Genetic Diversity App
+is built up by... 
