@@ -36,7 +36,7 @@ calculate_DGD <- function(input, reactive_DGD_table, reactive_KBA_info) {
   
   # Ergebnisse in reactive Datenrahmen speichern
   reactive_DGD_table$df_ratios <- data.frame(
-    Area = names(ratios),
+    site = names(ratios),
     `distinct genetic diversity (Δ<sup>+</sup><i><sub>j</sub></i>)` = mod$Dplus,
     `distinct genetic diversity (Δ<sup>+</sup><i><sub>j</sub></i>) [%]` = round(ratios, 2),
     check.names = FALSE

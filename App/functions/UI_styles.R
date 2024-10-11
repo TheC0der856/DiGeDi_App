@@ -3,7 +3,7 @@ UI_styles <- function() {
       .header {
         display: flex;
         align-items: center;
-        padding: 2rem;
+        padding-top: 2rem;
         justify-content: space-between;
         align-items: center;
       }
@@ -13,9 +13,9 @@ UI_styles <- function() {
         align-items: center;
       }
       .logo {
-        width: 100px; /* Größe des Logos anpassen */
-        height: auto;
-        margin-right: 20px; /* Abstand zwischen Logo und Titel */
+        width: auto; /* Größe des Logos anpassen */
+        height: 25px;
+        margin-right: 5px; /* Abstand zwischen Logo und Titel */
       }
       .title {
         font-size: 24px; /* Größe des Titels anpassen */

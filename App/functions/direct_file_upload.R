@@ -5,7 +5,7 @@ direct_file_upload <- function(file_ext, output) {
         numericInput("n_ind", label = h3("How many genotypes are there?"), value = "xxx", min = 2),
         numericInput("n_loc", label = h3("How many markers are there?"), value = "xxx", min = 1),
         numericInput("col_geno", label = h3("Which column contains labels for genotypes ('0' if absent)?"), value = "xxx", min = 0),
-        numericInput("col_area", label = h3("Which column contains the area names?"), value = "xxx", min = 1)
+        numericInput("col_area", label = h3("Which column contains the site names?"), value = "xxx", min = 1)
       )
     })
   } else if (file_ext %in% c("gen", "dat", "gtx", "csv")) {

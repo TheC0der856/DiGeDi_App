@@ -6,9 +6,9 @@ identify_kba <- function(input, reactive_DGD_table, reactive_KBA_info, reactive_
     
     output$KBA_identif <- renderText({
       if (length(names(reactive_KBA_info[[criterion_name]])) == 0) {
-        "None of the areas qualifies as KBA."
+        "None of the sites qualify becoming a KBA."
       } else {
-        paste0("Following areas qualify as KBAs: ", paste(names(reactive_KBA_info[[criterion_name]]), collapse = ", "), ".")
+        paste0("Following sites qualify becoming a KBA: ", paste(names(reactive_KBA_info[[criterion_name]]), collapse = ", "), ".")
       }
     })
     
