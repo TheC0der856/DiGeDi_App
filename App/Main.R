@@ -2,19 +2,8 @@
 # ... packages:
 source("packages/load_packages.R")
 # ... functions:
-# (example files for download)
-source("functions/upload_example_files.R")
-source("functions/download_datasets.R")
-source("functions/direct_file_upload.R")
-# (for layout)
-source("functions/UI_styles.R")
-source("functions/UI_datasets.R")
-source("functions/UI_threatened_options.R")
-# (display main calculations)
-source("functions/reset_results.R")
-source("functions/calculate_distinct_genetic_diversity.R")
-source("functions/identify_KBAs.R")
-
+source("functions/load_scripts_from_directory.R")
+load_scripts_from_directory("functions")
 
 server <- function(input, output, session) {
   
@@ -59,31 +48,12 @@ server <- function(input, output, session) {
     calculate_DGD(input, reactive_DGD_table, reactive_KBA_info)
     reactive_output$display <- "table"  # display the table
     
-    output$DGD_table <- renderTable({
-      reactive_DGD_table$df_ratios
-    }, rownames = FALSE, colnames = TRUE, sanitize.text.function = function(x) x)
-    output$KBA_identif <- renderText({
-      NULL  # Clear KBA identif output
+    output$DGD_table <- DT::renderDataTable({
+      distinct_genetic_diversity_table(reactive_DGD_table$df_ratios, input$decimal_places)
     })
   })
   
-  # Download distinct genetic diversity as a .csv
-  output$download_DGD <- downloadHandler(
-    filename = function() {
-      "distinct_genetic_diversity.csv"
-    },
-    content = function(file) {
-      reactive_output$display <- NULL # do not show DGD_table with new_colnames, show nothing instead
-      calculate_DGD(input, reactive_DGD_table, reactive_KBA_info)
-      # Change column names
-      new_colnames <- c("site", "Delta+j", "Delta+j_in_%")
-      colnames(reactive_DGD_table$df_ratios) <- new_colnames
-      # save file
-      write.csv(reactive_DGD_table$df_ratios, file, row.names = FALSE)
-      
-    }
-  )
-
+  
   ################### identify KBAs ####################
   identify_kba(input, reactive_DGD_table, reactive_KBA_info, reactive_output, output, "A1a_button", "A1a")
   identify_kba(input, reactive_DGD_table, reactive_KBA_info, reactive_output, output, "A1b_button", "A1b")
@@ -100,9 +70,8 @@ server <- function(input, output, session) {
     output$KBA_identif <- renderText({
       "Is your species Vulnerable or Critically Endangered/Endangered?"
     }) 
-    
-    output$DGD_table <- renderTable({
-      NULL  # Clear DGD table output
+    output$DGD_table <- DT::renderDataTable({
+      NULL  
     })
   })
   
@@ -112,7 +81,7 @@ server <- function(input, output, session) {
     if (is.null(reactive_output$display)) {
       NULL  
     } else if (reactive_output$display == "table") {
-      tableOutput("DGD_table")
+      DT::dataTableOutput("DGD_table")
     } else if (reactive_output$display == "KBA") {
       textOutput("KBA_identif")
     } else {
@@ -156,7 +125,7 @@ ui <- fluidPage(
                span(id = "file_info", class = "info-icon", icon("info-circle"))  # Icon for popover
              )
            ),
-  
+           
            fileInput("file", label = NULL),  # No label here, as we added a custom one above
            bsPopover(id = "file_info", 
                      title = "Accepted Formats", 
@@ -191,9 +160,17 @@ ui <- fluidPage(
     sidebarPanel(
       h3("Distinct genetic diversity"),
       div(
-        actionButton("display_genetic_diversity_btn", HTML("Display distinct genetic diversity (Δ<sup>+</sup><i><sub>j</sub></i>)"), style = "margin-bottom: 0px"),
-        downloadButton("download_DGD", HTML("Download distinct genetic diversity (Δ<sup>+</sup><i><sub>j</sub></i>) as .csv"))  
+        actionButton("display_genetic_diversity_btn", 
+                     HTML("Display distinct genetic diversity (Δ<sup>+</sup><i><sub>j</sub></i>)"), 
+                     style = "margin-bottom: 0px")
       ),
+      numericInput("decimal_places", 
+                   "decimal places:", 
+                   value = 2, 
+                   min = 0, 
+                   max = 10, 
+                   step = 1,
+                   width = "110px"),  
       br(), br(), 
       h3("Find sites for Key Biodiversity Areas (KBAs)"),
       actionButton("threatened_btn", "A1: Threatened species"),
