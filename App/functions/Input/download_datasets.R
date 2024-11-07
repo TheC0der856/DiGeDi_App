@@ -15,11 +15,14 @@ download_datasets <- function() {
                      "Millette et al. (2019): Breaking ecological barriers: anthropogenic disturbance leads to habitat transitions."),
     
     UI_datasets("downloadFstat", "Download .dat", "dat_info", 
-                     "Data Reference", 
-                     "DeFaveri et al. (2013): High degree of genetic differentiation in marine three-spined sticklebacks."),
+                "Data Reference", 
+                "DeFaveri et al. (2013): High degree of genetic differentiation in marine three-spined sticklebacks."),
     
     UI_datasets("downloadSTRUCTURE", "Download .str", "str_info_reference", 
-                     "Data Reference", 
-                     "Wagner et al. (2012): Recent speciation between sympatric Tanganyikan cichlid color morphs.")
+                "Data Reference", 
+                "Wagner et al. (2012): Recent speciation between sympatric Tanganyikan cichlid color morphs.",
+                extra_info_id = "str_info_answers", 
+                extra_title = "Answers to Upload the File", 
+                extra_content = "genotypes/individuals: 405, markers: 11, column containing genotypes/individuals: 1, column containing sites: 2")
   )
 }
