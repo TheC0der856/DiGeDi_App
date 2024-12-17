@@ -27,7 +27,7 @@ calculate_DGD <- function(input, reactive_DGD_table, reactive_KBA_info) {
   genpop <- genind2genpop(genind)
   allele_abundances <- genpop@tab
   t_allele_abundances <- t(allele_abundances)
-  taxdis <- taxa2dist(t_allele_abundances, varstep = TRUE)
+  taxdis <- taxa2dist(t_allele_abundances, varstep = FALSE)
   mod <- taxondive(allele_abundances, taxdis)
   
   # Ergebnisse berechnen
