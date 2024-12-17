@@ -9,7 +9,7 @@ server <- function(input, output, session) {
   
   ############### file upload ###################
   # Upload example files for user:
-  data <- read.csv("example_data_sets/df.csv")
+  data <- read.csv("example_data_sets/nancycats.csv")
   output$downloadData <- upload_example_csv(data)
   output$downloadGENETIX <- upload_example_files("Supp_Mat_1_Pperr_24loci_3pop.gtx")
   output$downloadGenpop <- upload_example_files("Microsatellite_dataset.gen")
